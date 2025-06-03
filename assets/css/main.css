@@ -195,10 +195,31 @@ input, select, textarea {
 /* Container */
 
 	.container {
-		margin: 0 auto;
-		max-width: 100%;
-		width: 1400px;
+	  display: grid;
+	  grid-template-columns: 200px 1fr 200px;
+	  grid-template-areas: "left main right";
+	  height: 100vh;
 	}
+	
+	.left-sidebar {
+	  grid-area: left;
+	  background: #eee;
+	  padding: 1rem;
+	}
+	
+	.main-content {
+	  grid-area: main;
+	  padding: 1rem;
+	  background: #fff;
+	}
+	
+	.right-sidebar {
+	  grid-area: right;
+	  background: #eee;
+	  padding: 1rem;
+	}
+
+
 
 		@media screen and (max-width: 1680px) {
 
