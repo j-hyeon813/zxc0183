@@ -115,7 +115,7 @@
 							</div>
 
 						<!-- Nav -->
-							<nav id="nav">
+							<nav id="nav" style="position:relative;">
 								<ul>
 									<li class="current"><a href="index.html">Welcome</a></li>
 									<li>
@@ -127,10 +127,23 @@
 											<li><a href="dropdown.html">Veroeros feugiat</a></li>
 										</ul>
 									</li>
-									<li><a href="left-sidebar.html">Left Sidebar</a></li>
-									<li><a href="right-sidebar.html">Right Sidebar</a></li>
-									<li><a href="no-sidebar.html">No Sidebar</a></li>
 								</ul>
+								<!-- 왼쪽 상단(흰색) 햄버거 버튼: fixed로 고정 -->
+    <button id="left-sidebar-toggle"
+        aria-label="왼쪽 사이드바 열기"
+        style="background:none;border:none;cursor:pointer;position:fixed;top:18px;left:24px;z-index:2001;transition:top 0.3s;">
+        <span style="display:block;width:28px;height:4px;background:#fff;margin:5px 0;border-radius:2px;"></span>
+        <span style="display:block;width:28px;height:4px;background:#fff;margin:5px 0;border-radius:2px;"></span>
+        <span style="display:block;width:28px;height:4px;background:#fff;margin:5px 0;border-radius:2px;"></span>
+    </button>
+    <!-- 오른쪽 상단(흰색) 햄버거 버튼: fixed로 고정 -->
+    <button id="right-sidebar-toggle"
+        aria-label="오른쪽 사이드바 열기"
+        style="background:none;border:none;cursor:pointer;position:fixed;top:18px;right:24px;z-index:2001;transition:top 0.3s;">
+        <span style="display:block;width:28px;height:4px;background:#fff;margin:5px 0;border-radius:2px;"></span>
+        <span style="display:block;width:28px;height:4px;background:#fff;margin:5px 0;border-radius:2px;"></span>
+        <span style="display:block;width:28px;height:4px;background:#fff;margin:5px 0;border-radius:2px;"></span>
+    </button>
 							</nav>
 
 					</header>
@@ -426,6 +439,134 @@
         if(e.target === this) this.style.display = 'none';
     };
     </script>
+
+    <script>
+    // 햄버거 버튼 클릭 시 사이드바 열기
+    document.getElementById('sidebar-toggle').onclick = function() {
+        document.getElementById('main-sidebar').style.right = '0';
+    };
+    // 닫기 버튼 클릭 시 사이드바 닫기
+    document.getElementById('sidebar-close').onclick = function() {
+        document.getElementById('main-sidebar').style.right = '-320px';
+    };
+    // 바깥 클릭 시 닫기 (선택)
+    document.addEventListener('click', function(e) {
+        const sidebar = document.getElementById('main-sidebar');
+        const toggle = document.getElementById('sidebar-toggle');
+        if (
+            sidebar.style.right === '0px' &&
+            !sidebar.contains(e.target) &&
+            e.target !== toggle && !toggle.contains(e.target)
+        ) {
+            sidebar.style.right = '-320px';
+        }
+    });
+    </script>
+
+    <!-- 왼쪽 사이드바 -->
+<div id="left-sidebar"
+    style="position:fixed;top:0;left:-320px;width:300px;height:100vh;background:#fff;box-shadow:2px 0 16px rgba(33,147,176,0.10);z-index:2000;transition:left 0.4s;display:flex;flex-direction:column;padding:32px 18px;">
+    <button id="left-sidebar-close"
+        aria-label="왼쪽 사이드바 닫기"
+        style="background:none;border:none;font-size:2em;align-self:flex-end;color:#222;cursor:pointer;">
+        &times;
+    </button>
+    <h2 style="color:#222;">여행 팁</h2>
+    <ul style="color:#222;">
+        <li>여권/비자 준비</li>
+        <li>여행 보험 가입</li>
+        <li>환전 및 현지 통신</li>
+        <li>짐 싸기 체크리스트</li>
+    </ul>
+    <h2 style="color:#222;">추천 여행지</h2>
+    <ul style="color:#222;">
+        <li>파리</li>
+        <li>도쿄</li>
+        <li>뉴욕</li>
+        <li>시드니</li>
+    </ul>
+</div>
+
+<!-- 오른쪽 사이드바 -->
+<div id="right-sidebar"
+    style="position:fixed;top:0;right:-320px;width:300px;height:100vh;background:#fff;box-shadow:-2px 0 16px rgba(33,147,176,0.10);z-index:2000;transition:right 0.4s;display:flex;flex-direction:column;padding:32px 18px;">
+    <button id="right-sidebar-close"
+        aria-label="오른쪽 사이드바 닫기"
+        style="background:none;border:none;font-size:2em;align-self:flex-end;color:#222;cursor:pointer;">
+        &times;
+    </button>
+    <h2 style="color:#222;">여행 팁</h2>
+    <ul style="color:#222;">
+        <li>여권/비자 준비</li>
+        <li>여행 보험 가입</li>
+        <li>환전 및 현지 통신</li>
+        <li>짐 싸기 체크리스트</li>
+    </ul>
+    <h2 style="color:#222;">추천 여행지</h2>
+    <ul style="color:#222;">
+        <li>파리</li>
+        <li>도쿄</li>
+        <li>뉴욕</li>
+        <li>시드니</li>
+    </ul>
+</div>
+
+<script>
+    // 햄버거 버튼/사이드바 열기/닫기
+    const leftSidebarToggle = document.getElementById('left-sidebar-toggle');
+    const leftSidebar = document.getElementById('left-sidebar');
+    const leftSidebarClose = document.getElementById('left-sidebar-close');
+    const rightSidebarToggle = document.getElementById('right-sidebar-toggle');
+    const rightSidebar = document.getElementById('right-sidebar');
+    const rightSidebarClose = document.getElementById('right-sidebar-close');
+
+    leftSidebarToggle.onclick = function(e) {
+        e.stopPropagation();
+        leftSidebar.style.left = '0';
+        leftSidebarToggle.style.display = 'none';
+    };
+    leftSidebarClose.onclick = function() {
+        leftSidebar.style.left = '-320px';
+        leftSidebarToggle.style.display = 'block';
+    };
+    rightSidebarToggle.onclick = function(e) {
+        e.stopPropagation();
+        rightSidebar.style.right = '0';
+        rightSidebarToggle.style.display = 'none';
+    };
+    rightSidebarClose.onclick = function() {
+        rightSidebar.style.right = '-320px';
+        rightSidebarToggle.style.display = 'block';
+    };
+    // 바깥 클릭 시 닫기
+    document.addEventListener('click', function(e) {
+        if (leftSidebar.style.left === '0px' && !leftSidebar.contains(e.target) && e.target.id !== 'left-sidebar-toggle') {
+            leftSidebar.style.left = '-320px';
+            leftSidebarToggle.style.display = 'block';
+        }
+        if (rightSidebar.style.right === '0px' && !rightSidebar.contains(e.target) && e.target.id !== 'right-sidebar-toggle') {
+            rightSidebar.style.right = '-320px';
+            rightSidebarToggle.style.display = 'block';
+        }
+    });
+
+    // 스크롤 시 햄버거 버튼 위로 이동(숨김 효과)
+    let lastScrollY = window.scrollY;
+    function toggleHamburgerOnScroll() {
+        const show = window.scrollY < 10;
+        const hideTop = '-60px';
+        const showTop = '18px';
+        if (leftSidebar.style.left !== '0px') {
+            leftSidebarToggle.style.top = show ? showTop : hideTop;
+        }
+        if (rightSidebar.style.right !== '0px') {
+            rightSidebarToggle.style.top = show ? showTop : hideTop;
+        }
+    }
+    window.addEventListener('scroll', toggleHamburgerOnScroll);
+    // 초기 위치 보정
+    toggleHamburgerOnScroll();
+</script>
 
 	</body>
 </html>
